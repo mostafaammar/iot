@@ -7,7 +7,9 @@
 #define WLAN_SSID       "...."
 #define WLAN_PASS       "......"
 #define AIO_SERVER      "io.adafruit.com"
-#define AIO_SERVERPORT  1883                  
+#define AIO_SERVERPORT  1883          
+const char* ssid_home= "........";//put here your ssid
+const char* wifi_pass=".........";//put here your password
 int output=2;
 WiFiClient client;     // Create an ESP8266 WiFiClient class to connect to the MQTT server.
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);        // Setup the MQTT client class by passing in the WiFi client and MQTT server and login details.
