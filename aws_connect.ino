@@ -4,11 +4,14 @@
 #include <ArduinoJson.h>
 #include "WiFi.h"
 
+
+
 // The MQTT topics that this device should publish/subscribe
 #define AWS_IOT_PUBLISH_TOPIC   "esp32/pub"
 #define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
-const char* ssid     = " put your ssid here";
-const char* password = "put your password here";
+const char* ssid     = "............";//put your ssid here
+const char* password = "................";//put your password here
+const int LED_pin = 26;
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
 
@@ -71,12 +74,30 @@ void publishMessage()
 void messageHandler(String &topic, String &payload) {
   Serial.println("incoming: " + topic + " - " + payload);
 
-//  StaticJsonDocument<200> doc;
-//  deserializeJson(doc, payload);
-//  const char* message = doc["message"];
-}
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload);
+  const char* message = doc["message"];
+  Serial.println(message);
+ 
 
+if(strcmp(message, "on") == 0){
+  digitalWrite(LED_pin,1); 
+  
+  delay(1000);
+  }
+if(strcmp(message, "0") == 0){
+  digitalWrite(LED_pin,0); 
+  
+  delay(1000);
+  }
+
+
+Serial.println();
+Serial.println("-----------------------"); 
+
+}
 void setup() {
+  pinMode(LED_pin, OUTPUT); // set led as output
   Serial.begin(9600);
   connectAWS();
 }
